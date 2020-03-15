@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.angularjs.org/1.2.13/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller.js"></script>
+</head>
+<body>
+<!-- Initialize a new AngularJS app and associate it
+     with a module named "instantSearch"-->
+<div ng-app="searchApp" ng-controller="searchController" style="width:500px">
+    <div>
+        <h2>Information Retrieval Search Engine</h2>
+    </div>
+    <div style="margin:20px">
+        <p>
+            Use the search below to find an associated web page!
+        </p>
+    </div>
+<!--
+    <div class="bar">
+            <input type="text" ng-model="searchString"
+               placeholder="Enter your search terms!" />
+    </div>
+-->
+    <div class="bar" ng-init="">
+        <i class="fa fa-search left-icon"></i>
+        <input placeholder="Search here" ng-model="searchInputVal"/>
+        <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (searchInputVal.length > 0)}" ng-click="searchInputVal = ''"></i>
+    </div>
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-transclude="">Lucene<div class="md-ripple-container" style=""></div></button>
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-transclude="">MapReduce<div class="md-ripple-container" style=""></div></button>
+    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-transclude="">Search<div class="md-ripple-container" style=""></div></button>
+
+    <ul>
+        <!-- Render a li element for every entry in the items array. Notice
+             the custom search filter "searchFor". It takes the value of the
+             searchString model as an argument.
+         -->
+        <li ng-repeat="m in movies | searchFor:searchString">
+            <p>{{m.releaseYr}} : {{m.name}}</p>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
