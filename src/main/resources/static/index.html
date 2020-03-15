@@ -3,8 +3,7 @@
 <head>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://code.angularjs.org/1.2.13/angular.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/controller.js"></script>
+
 </head>
 <body>
 <!-- Initialize a new AngularJS app and associate it
@@ -18,17 +17,15 @@
             Use the search below to find an associated web page!
         </p>
     </div>
-<!--
-    <div class="bar">
-            <input type="text" ng-model="searchString"
-               placeholder="Enter your search terms!" />
-    </div>
--->
+
+    <!-- Begining of search bar -->
     <div class="bar" ng-init="">
         <i class="fa fa-search left-icon"></i>
-        <input placeholder="Search here" ng-model="searchInputVal"/>
+        <input placeholder="Search here" ng-model="searchString"/>
         <i ng-class="{'fa' : true, 'fa-close' : true, 'right-icon' : true, active : (searchInputVal.length > 0)}" ng-click="searchInputVal = ''"></i>
     </div>
+    <!-- End of search bar -->
+
     <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-transclude="">Lucene<div class="md-ripple-container" style=""></div></button>
     <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-transclude="">MapReduce<div class="md-ripple-container" style=""></div></button>
     <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-transclude="">Search<div class="md-ripple-container" style=""></div></button>
@@ -43,5 +40,7 @@
         </li>
     </ul>
 </div>
+<script src="js/app.js"></script>
+<script src="js/controller.js"></script>
 </body>
 </html>
