@@ -1,15 +1,20 @@
 package ucr.edu.ir.webApp.model;
 
-public class person {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.UUID;
+
+public class Person {
     private final UUID id;
     private final String name;
 
-    public person(UUID id, String name) {
+    public Person(@JsonProperty("id") UUID id,
+                  @JsonProperty("name") String name) {
         this.id = id;
         this.name = name;
     }
 
-    public UUID getId() {
+    public UUID getID() {
         return id;
     }
 
