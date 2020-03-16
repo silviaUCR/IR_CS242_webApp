@@ -30,14 +30,4 @@ public class FakePersonDataAccessService implements PersonDao {
                 .filter(person -> person.getID().equals(id))
                 .findFirst();
     }
-
-    @Override
-    public int deletePersonById(UUID id) {
-        return 0;
-    }
-
-    @Override
-    public int updatePersonById(UUID id, Person person) {
-        return 0;
-    }
 }

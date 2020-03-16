@@ -1,3 +1,57 @@
+app.controller('ngSearch', function ($scope, $http) {
+    $scope.searchString = null;
+
+    $scope.putData = function (searchString) {
+        $scope.visible = searchString; //Show user what he last searched
+        console.log(searchString);
+        var data = {
+            name: searchString
+        };
+
+        //Convert to json object
+        var myJSON = JSON.stringify(data);
+
+    //Call the services
+    $http.post('/api/v1', JSON.stringify(data)).then(function (response) {
+    if (response.data)
+        $scope.msg = "Put Data Method Executed Successfully!";
+    }, function (response) {
+        $scope.msg = "Service not Exists";
+        $scope.statusval = response.status;
+        $scope.statustext = response.statusText;
+        $scope.headers = response.headers();
+    });
+    };
+});
+
+//app.controller('ngSearch', function ($scope) {
+//    $scope.clkcount = null;
+//
+//    $scope.getDetails = function (searchString) {
+//        //console.log(searchString);
+//        $scope.clkcount = searchString;
+//
+//        $http.put(url, data, config).then(function (response) {
+//            // This function handles success
+//            }, function (response) {
+//                // this function handles error
+//            });
+//
+//    }
+//});
+
+//var app = angular.module('putserviceApp', []);
+//app.controller('putserviceCtrl', function ($scope, $http) {
+//    // Simple Put request example:
+//    var url = 'puturl', data = 'parameters',config='contenttype';
+//    $http.put(url, data, config).then(function (response) {
+//        // This function handles success
+//    }, function (response) {
+//        // this function handles error
+//    });
+//});
+
+
 // Create the search filter
 app.filter('searchFor', function(){
     // All filters must return a function. The first parameter

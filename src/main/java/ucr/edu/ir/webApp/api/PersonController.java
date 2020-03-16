@@ -8,7 +8,7 @@ import ucr.edu.ir.webApp.service.PersonService;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("api/v1/person")
+@RequestMapping("api/v1")
 @RestController
 public class PersonController {
     private final PersonService personService;
