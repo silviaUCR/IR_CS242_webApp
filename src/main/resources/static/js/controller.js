@@ -1,10 +1,11 @@
 app.controller('ngSearch', function ($scope, $http) {
     $scope.searchString = null;
 
-    $scope.putData = function (searchString) {
-        $scope.visible = searchString; //Show user what he last searched
+    $scope.putDataLucene = function (searchString) {
+        $scope.visible = 'Lucene: '+searchString; //Show user what he last searched
         console.log(searchString);
         var data = {
+            type: 'lucene',
             name: searchString
         };
 
@@ -20,8 +21,32 @@ app.controller('ngSearch', function ($scope, $http) {
         $scope.statusval = response.status;
         $scope.statustext = response.statusText;
         $scope.headers = response.headers();
-    });
+        });
     };
+
+    $scope.putDataHadoop = function (searchString) {
+        $scope.visible = 'Hadoop: '+searchString; //Show user what he last searched
+        console.log(searchString);
+        var data = {
+            type: 'hadoop',
+            name: searchString
+        };
+
+        //Convert to json object
+        var myJSON = JSON.stringify(data);
+
+    //Call the services
+    $http.post('/api/v1', JSON.stringify(data)).then(function (response) {
+    if (response.data)
+        $scope.msg = "Put Data Method Executed Successfully!";
+    }, function (response) {
+        $scope.msg = "Service not Exists";
+        $scope.statusval = response.status;
+        $scope.statustext = response.statusText;
+        $scope.headers = response.headers();
+        });
+    };
+
 });
 
 //app.controller('ngSearch', function ($scope) {
