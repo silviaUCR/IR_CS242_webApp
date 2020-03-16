@@ -7,8 +7,6 @@ import ucr.edu.ir.webApp.dao.PersonDao;
 import ucr.edu.ir.webApp.model.Person;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PersonService {
@@ -27,9 +25,4 @@ public class PersonService {
     public List<Person> getAllPeople() {
         return personDao.selectAllPeople();
     }
-
-    public Optional<Person> getPersonByID(UUID id) {
-        return personDao.selectPersonById(id);
-    }
-
 }

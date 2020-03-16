@@ -6,7 +6,6 @@ import ucr.edu.ir.webApp.model.Person;
 import ucr.edu.ir.webApp.service.PersonService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RequestMapping("api/v1")
 @RestController
@@ -28,10 +27,5 @@ public class PersonController {
         return personService.getAllPeople();
     }
 
-    @GetMapping(path = "{id}")
-    public Person getPersonById(@PathVariable("id") UUID id) {
-        return personService.getPersonByID(id)
-                .orElse(null);
-    }
 }
 
