@@ -1,11 +1,11 @@
 app.controller('ngSearch', function ($scope, $http) {
     $scope.searchString = null;
 
-    $scope.putDataLucene = function (searchString) {
+    $scope.getDataLucene = function (searchString) {
         $scope.visible = 'Lucene: '+searchString; //Show user what he last searched
         console.log(searchString);
         var data = {
-            type: 'lucene',
+            index: 'l',
             name: searchString
         };
 
@@ -13,7 +13,7 @@ app.controller('ngSearch', function ($scope, $http) {
         var myJSON = JSON.stringify(data);
 
     //Call the services
-    $http.post('/api/v1', JSON.stringify(data)).then(function (response) {
+    $http.getDetails('/api/query', JSON.stringify(data)).then(function (response) {
     if (response.data)
         $scope.msg = "Put Data Method Executed Successfully!";
     }, function (response) {
@@ -24,11 +24,11 @@ app.controller('ngSearch', function ($scope, $http) {
         });
     };
 
-    $scope.putDataHadoop = function (searchString) {
+    $scope.getDataHadoop = function (searchString) {
         $scope.visible = 'Hadoop: '+searchString; //Show user what he last searched
         console.log(searchString);
         var data = {
-            type: 'hadoop',
+            index: 'm',
             name: searchString
         };
 
@@ -36,7 +36,7 @@ app.controller('ngSearch', function ($scope, $http) {
         var myJSON = JSON.stringify(data);
 
     //Call the services
-    $http.post('/api/v1', JSON.stringify(data)).then(function (response) {
+    $http.getDetails('/api/v1', JSON.stringify(data)).then(function (response) {
     if (response.data)
         $scope.msg = "Put Data Method Executed Successfully!";
     }, function (response) {

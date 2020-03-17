@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://code.angularjs.org/1.2.13/angular.js"></script>
 </head>
 <body>
@@ -12,22 +12,21 @@
         <h2>Information Retrieval Search Engine</h2>
     </div>
     <div style="margin:20px">
-        <p>
+        <p>CS_242_Group: Silvia, Yue, Jasper, William, Brandon<br><br>
             Use the search below to find an associated web page!
         </p>
     </div>
 
-    <div ng-controller="ngSearch" class="bar">
-        <input type="text" size="50" ng-model="searchString" placeholder="Enter your search terms!" />
-       <div>
-           <br>
-           <input type="button" style="cursor:pointer" value="Lucene Search" ng-click="putDataLucene(searchString)" />
-           <input type="button" style="cursor:pointer" value="Hadoop Search" ng-click="putDataHadoop(searchString)" />
+    <div ng-controller="ngSearch">
+        <input size="50" type="text" ng-model="searchString" placeholder="Enter your search terms!" />
+
+        <div class="body">
+            <input type="button" style="cursor:pointer" value="Lucene Search" ng-click="putDataLucene(searchString)" />
+            <input type="button" style="cursor:pointer" value="Hadoop Search" ng-click="putDataHadoop(searchString)" />
         </div>
-        <br>
-        <div style="color:black">Search Query for: {{ visible }} </div>
+         <div class="body">Searched Query for: {{ visible }} </div>
     </div>
-    <br>
+        <br>
     <ul>
         <!-- Render a li element for every entry in the items array. Notice
              the custom search filter "searchFor". It takes the value of the
