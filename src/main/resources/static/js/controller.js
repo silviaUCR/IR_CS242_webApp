@@ -18,18 +18,6 @@ app.controller('ngSearch', function ($scope, $http) {
             method: "GET",
             params: {index: "l", query: searchString}
          });
-
-
-//    //Call the services
-//    $http.get('/api/query', JSON.stringify(data)).then(function (response) {
-//    if (response.data)
-//        $scope.msg = "Put Data Method Executed Successfully!";
-//    }, function (response) {
-//        $scope.msg = "Service not Exists";
-//        $scope.statusval = response.status;
-//        $scope.statustext = response.statusText;
-//        $scope.headers = response.headers();
-//        });
     };
 
     $scope.getDataHadoop = function (searchString) {
@@ -45,20 +33,6 @@ app.controller('ngSearch', function ($scope, $http) {
             method: "GET",
             params: {index: "m", query: searchString}
          });
-
-//        //Convert to json object
-//        var myJSON = JSON.stringify(data);
-//
-//    //Call the services
-//    $http.get('/api/v1', JSON.stringify(data)).then(function (response) {
-//    if (response.data)
-//        $scope.msg = "Put Data Method Executed Successfully!";
-//    }, function (response) {
-//        $scope.msg = "Service not Exists";
-//        $scope.statusval = response.status;
-//        $scope.statustext = response.statusText;
-//        $scope.headers = response.headers();
-//        });
     };
 
 });

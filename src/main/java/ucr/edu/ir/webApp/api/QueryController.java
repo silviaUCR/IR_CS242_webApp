@@ -15,6 +15,7 @@ public class QueryController {
     public HashMap getAllPeople(@RequestParam(value = "index", defaultValue = "m") String indexType,
                                 @RequestParam(value = "query", defaultValue = "") String query
     ) {
+        System.out.println("Received input. Type: " + indexType +" Query: "+ query);
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
         if (indexType.toLowerCase()=="m")
         {
