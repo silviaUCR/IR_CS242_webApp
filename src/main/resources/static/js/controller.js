@@ -2,6 +2,7 @@ app.controller('ngSearch', function ($scope, $http) {
     $scope.searchString = null;
 
     $scope.getDataLucene = function (searchString) {
+
         $scope.visible = 'Lucene: '+searchString; //Show user what he last searched
         console.log(searchString);
         var data = {
@@ -10,18 +11,25 @@ app.controller('ngSearch', function ($scope, $http) {
         };
 
         //Convert to json object
-        var myJSON = JSON.stringify(data);
+//        var myJSON = JSON.stringify(data);
 
-    //Call the services
-    $http.getDetails('/api/query', JSON.stringify(data)).then(function (response) {
-    if (response.data)
-        $scope.msg = "Put Data Method Executed Successfully!";
-    }, function (response) {
-        $scope.msg = "Service not Exists";
-        $scope.statusval = response.status;
-        $scope.statustext = response.statusText;
-        $scope.headers = response.headers();
-        });
+        $http({
+            url: '/api/query',
+            method: "GET",
+            params: {index: "l", query: searchString}
+         });
+
+
+//    //Call the services
+//    $http.get('/api/query', JSON.stringify(data)).then(function (response) {
+//    if (response.data)
+//        $scope.msg = "Put Data Method Executed Successfully!";
+//    }, function (response) {
+//        $scope.msg = "Service not Exists";
+//        $scope.statusval = response.status;
+//        $scope.statustext = response.statusText;
+//        $scope.headers = response.headers();
+//        });
     };
 
     $scope.getDataHadoop = function (searchString) {
@@ -32,19 +40,25 @@ app.controller('ngSearch', function ($scope, $http) {
             name: searchString
         };
 
-        //Convert to json object
-        var myJSON = JSON.stringify(data);
+        $http({
+            url: '/api/query',
+            method: "GET",
+            params: {index: "m", query: searchString}
+         });
 
-    //Call the services
-    $http.getDetails('/api/v1', JSON.stringify(data)).then(function (response) {
-    if (response.data)
-        $scope.msg = "Put Data Method Executed Successfully!";
-    }, function (response) {
-        $scope.msg = "Service not Exists";
-        $scope.statusval = response.status;
-        $scope.statustext = response.statusText;
-        $scope.headers = response.headers();
-        });
+//        //Convert to json object
+//        var myJSON = JSON.stringify(data);
+//
+//    //Call the services
+//    $http.get('/api/v1', JSON.stringify(data)).then(function (response) {
+//    if (response.data)
+//        $scope.msg = "Put Data Method Executed Successfully!";
+//    }, function (response) {
+//        $scope.msg = "Service not Exists";
+//        $scope.statusval = response.status;
+//        $scope.statustext = response.statusText;
+//        $scope.headers = response.headers();
+//        });
     };
 
 });

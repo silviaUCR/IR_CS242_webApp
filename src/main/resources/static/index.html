@@ -21,10 +21,10 @@
         <input size="50" type="text" ng-model="searchString" placeholder="Enter your search terms!" />
 
         <div class="body">
-            <input type="button" style="cursor:pointer" value="Lucene Search" ng-click="putDataLucene(searchString)" />
-            <input type="button" style="cursor:pointer" value="Hadoop Search" ng-click="putDataHadoop(searchString)" />
+            <input type="button" style="cursor:pointer" value="Lucene Search" ng-click="getDataLucene(searchString)" />
+            <input type="button" style="cursor:pointer" value="Hadoop Search" ng-click="getDataHadoop(searchString)" />
         </div>
-         <div class="body">Searched Query: {{ visible }} </div>
+         <div class="body"> {{ visible }} </div>
     </div>
         <br>
     <ul>
