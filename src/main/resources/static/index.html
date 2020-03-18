@@ -43,18 +43,19 @@
 
                                     </div>
 
-                                    <div style="color:#BDB76B;" class="body"> {{ visible }} </div>
+                                    <div style="color:#BDB76B; border-style: dotted; background-color:#FFFFFF;" class="body"> {{ visible }} </div>
 
                                     <br>
                                     <table>
                                         <tr>
+
                                             <th style="color:#FFD700; text-align: left;">Result</th>
-                                            <!--<th>Score</th>-->
+                                            <th style="color:#FFD700; text-align: left;">Score</th>
                                         </tr>
                                         <tr  style="text-align: left;" ng-repeat="i in data | orderBy:'-score'">
 
-                                            <td><a href={{i.result}}>{{i.result}}</a></td>
-                                            <!--<td>{{i.score}}</td>-->
+                                            <td style="background-color:#FFFFFF;"><a href={{i.result}}>{{i.result}}</a></td>
+                                            <td style="color:#FFC0CB; background-color:#FFFFFF;">{{i.score}}</td>
                                         </tr>
                                     </table>
                                 </div>
