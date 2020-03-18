@@ -7,6 +7,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
@@ -20,7 +21,7 @@ public class LuceneIndexReader {
 
     static IndexSearcher searcher = null;
 
-    public static void doSearch(String indexPath, String searchTerm) throws Exception {
+    public static void doSearch(String indexPath, String searchTerm) throws IOException, ParseException {
         if (!openSearcher(indexPath)) {
             System.out.println("Could not open the index for searching.");
             return;
@@ -37,7 +38,7 @@ public class LuceneIndexReader {
         return true;
     }
 
-    static void searchIndex(String searchTerm) throws Exception {
+    static void searchIndex(String searchTerm) throws IOException, ParseException {
 
         QueryParser qp = new QueryParser("body", new StandardAnalyzer());
         Query idQuery = qp.parse(searchTerm);
