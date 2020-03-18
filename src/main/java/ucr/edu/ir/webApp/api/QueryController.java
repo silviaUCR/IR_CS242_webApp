@@ -3,9 +3,11 @@ package ucr.edu.ir.webApp.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ucr.edu.ir.webApp.Action.InvertedIndex;
+import ucr.edu.ir.webApp.Action.*;
+import ucr.edu.ir.webApp.Action.LuceneSearcher;
 import ucr.edu.ir.webApp.model.Person;
 import ucr.edu.ir.webApp.service.PersonService;
-
+import ucr.edu.ir.webApp.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -37,6 +39,12 @@ public class QueryController {
         }
         else {
             // Call Lucene index reader
+
+            //Location of Lucene Index
+            String indexPath = "/home/js010582/IdeaProjects/IR_CS242_webApp/luceneindex";
+            System.out.println("Lucene Search");
+
+            LuceneIndexReader.doSearch(indexPath, query);
             // return SearchLucene(queryTerm);
         }
         // Just to generate a response
