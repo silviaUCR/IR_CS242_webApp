@@ -26,7 +26,7 @@ public class QueryController {
     ) throws IOException, ParseException {
         System.out.println("Received input. Type: '" + indexType + "' Query: '" + query + "'");
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
-        Map<String, Double> urllist = new HashMap<String, Double>();;
+        Map<String, Double> urllist = new HashMap<String, Double>();
         List<HashMap> results=new ArrayList<HashMap>();
 
 

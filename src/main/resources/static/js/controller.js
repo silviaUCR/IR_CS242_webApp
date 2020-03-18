@@ -4,7 +4,7 @@ app.controller('ngSearch', function ($scope, $http) {
     $scope.obj = null;
 
     $scope.getDataLucene = function (searchString) {
-        $scope.visible = 'Lucene: '+searchString; //Show user what he last searched
+        $scope.visible = 'Selected Index: Lucene'; //'//+searchString Show user what he last searched
         $http({
             method: 'GET',
             url: 'api/query',
@@ -15,7 +15,7 @@ app.controller('ngSearch', function ($scope, $http) {
     };
 
     $scope.getDataHadoop = function (searchString) {
-        $scope.visible = 'Hadoop: '+searchString; //Show user what he last searched
+        $scope.visible = 'Selected Index: Hadoop MR'; //Show user what he last searched
         $http({
             method: 'GET',
             url: 'api/query',
