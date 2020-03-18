@@ -93,8 +93,8 @@ public class InvertedIndex  {
                     int dvol = dfreq.get(url);
                     double cqi = tfreq.get(term);
                     double lambda = 0.5; //MAYBE IMPLEMENT SOMETHING TO CHANGE THE LAMBDA GIVEN A MORE COMPLEX QUERY. LOWER LAMBDA FOR SIMPLE.
-                    //double lang_model_alg = ((1-lambda) * tf/dvol) + (lambda * tf/cvol);
-                    double lang_model_alg = Math.log((tf + ((cvol/dct)*cqi/cvol))/(dvol+(cvol/dct)));
+                    double lang_model_alg = ((1-lambda) * tf/dvol) + (lambda * tf/cvol); //Jelinek Mercer Smoothing
+                    //double lang_model_alg = Math.log((tf + ((cvol/dct)*cqi/cvol))/(dvol+(cvol/dct))); //Dirichlet Smoothing
 
                     double lm = dfreq.get(url);
 
@@ -102,7 +102,8 @@ public class InvertedIndex  {
                         langmodel.put(url, lang_model_alg);
                     }
                     else {
-                        langmodel.put(url, lm + lang_model_alg);
+                        langmodel.put(url, lm * lang_model_alg); //Jelinek Mercer Smoothing
+                        //langmodel.put(url, lm + lang_model_alg); //Dirichlet Smoothing
                     }
 
 
