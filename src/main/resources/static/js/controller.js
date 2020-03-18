@@ -32,7 +32,7 @@ app.controller('ngSearch', function ($scope, $http) {
             params: {index: "m", query: searchString}
          }).then(function success(response) {
             myResponse = response.data;
-            $scope.response = myResponse.urllist;
+            $scope.response = myResponse.result;
          });
     };
 });
