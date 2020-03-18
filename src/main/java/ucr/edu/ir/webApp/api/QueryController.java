@@ -26,9 +26,11 @@ public class QueryController {
     ) throws IOException {
         System.out.println("Received input. Type: " + indexType +" Query: "+ query);
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
+        List<String> urllist = new ArrayList<String>();;
+
         if (indexType.toLowerCase()=="m")
         {
-            InvertedIndex.InvertedIndex(query);
+            urllist = InvertedIndex.InvertedIndex(query);
 
             // Call MapReduce index search
             // return SearchMapReduce(queryTerm);
@@ -41,7 +43,7 @@ public class QueryController {
         HashMap hmDummy = new HashMap<String, String>();
         hmDummy.put("index", indexType);
         hmDummy.put("query", query);
-        hmDummy.put("result","could go here");
+        hmDummy.put("result",urllist);
         return hmDummy;
     }
 }
