@@ -6,18 +6,10 @@ import java.io.BufferedReader;
 import java.io.File;
 
 
-
-
-
 public class InvertedIndex  {
-
-
-    //public static void main( String[] args ) throws IOException {
-    public static List<String> InvertedIndex(String query) throws IOException {
-
-    //public static void InvertedIndex (String query) throws IOException {
-        String filePath = "C:\\Crawler Extract\\part-r-00000.txt"; //FOR WINDOWS
-        //String filePath = "/home/ucruser/inverted_index/output/out1/part-r-00000";
+    public static List<String> Search(String query) throws IOException {
+        System.out.println("Starting Hadoop Inverted Index Search....");
+        String filePath = "part-r-00000.txt";
         HashMap<String, String> dictionary = new HashMap<String, String>();
 
         String line;

@@ -16,16 +16,5 @@ public class PersonController {
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
-
-    @PostMapping
-    public void addPerson(@RequestBody Person person) {
-        personService.addPerson(person);
-    }
-
-    @GetMapping
-    public List<Person> getAllPeople() {
-        return personService.getAllPeople();
-    }
-
 }
 

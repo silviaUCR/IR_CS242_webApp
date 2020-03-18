@@ -21,17 +21,17 @@ public class QueryController {
 
 
     @GetMapping
-    public HashMap getAllPeople(@RequestParam(value = "index", defaultValue = "m") String indexType,
+    public List<HashMap> getQueryResults(@RequestParam(value = "index", defaultValue = "m") String indexType,
                                 @RequestParam(value = "query", defaultValue = "") String query
     ) throws IOException {
-        System.out.println("Received input. Type: " + indexType +" Query: "+ query);
+        System.out.println("Received input. Type: '" + indexType + "' Query: '" + query + "'");
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
         List<String> urllist = new ArrayList<String>();;
 
-        if (indexType.toLowerCase()=="m")
+        if (indexType.equals("m"))
         {
-            urllist = InvertedIndex.InvertedIndex(query);
-
+            urllist = InvertedIndex.Search(query);
+            System.out.println("Inverted Result: " + urllist);
             // Call MapReduce index search
             // return SearchMapReduce(queryTerm);
         }
@@ -40,11 +40,17 @@ public class QueryController {
             // return SearchLucene(queryTerm);
         }
         // Just to generate a response
-        HashMap hmDummy = new HashMap<String, String>();
-        hmDummy.put("index", indexType);
-        hmDummy.put("query", query);
-        hmDummy.put("result",urllist);
-        return hmDummy;
+        List<HashMap> results=new ArrayList<HashMap>();
+        HashMap hmResult1 = new HashMap<String, String>();
+        hmResult1.put("result","acme");
+        hmResult1.put("score",85);
+        results.add(hmResult1);
+        HashMap hmResult2 = new HashMap<String, String>();
+        hmResult2.put("result","blah");
+        hmResult2.put("score",89);
+        results.add(hmResult2);
+        System.out.println("Data: " + results);
+        return results;
     }
 }
 
