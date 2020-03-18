@@ -1,5 +1,6 @@
 package ucr.edu.ir.webApp.api;
 
+import org.apache.lucene.search.ScoreDoc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ucr.edu.ir.webApp.Action.InvertedIndex;
@@ -18,16 +19,16 @@ import java.util.*;
 @RestController
 public class QueryController {
 
-
     @GetMapping
     public List<HashMap> getQueryResults(@RequestParam(value = "index", defaultValue = "m") String indexType,
                                 @RequestParam(value = "query", defaultValue = "") String query
-    ) throws IOException {
+    ) throws Exception {
         System.out.println("Received input. Type: '" + indexType + "' Query: '" + query + "'");
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
-        Map<String, Double> urllist = new HashMap<String, Double>();;
-        List<HashMap> results=new ArrayList<HashMap>();
+        Map<String, Double> urllist = new HashMap<String, Double>(); //return for hadoop
+        Map<Double, String> lucenelist = new HashMap<Double, String>(); //return for lucene
 
+        List<HashMap> results=new ArrayList<HashMap>();
 
         if (indexType.equals("m"))
         {
@@ -45,17 +46,31 @@ public class QueryController {
                 results.add(hmResult1);
                 rank += 1;
             }
-
         }
         else {
-            // Call Lucene index reader
-
-            //Location of Lucene Index
-            String indexPath = "/home/js010582/IdeaProjects/IR_CS242_webApp/luceneindex";
-            System.out.println("Lucene Search");
-
-            LuceneIndexReader.doSearch(indexPath, query);
+            //Call Lucene index reader
+            lucenelist = LuceneIndexReader.doSearch(query);
             // return SearchLucene(queryTerm);
+
+            int rank = 1;
+            for (Double key : lucenelist.keySet()) {
+                HashMap hmResult1 = new HashMap<String, String>();
+                hmResult1.put("result",lucenelist.get(key));
+                hmResult1.put("score", key);
+                System.out.println("Data: " + hmResult1);
+                results.add(hmResult1);
+                rank += 1;
+            }
+
+
+//            int rank = 1;
+//            for (String key : urllist.keySet()) {
+//                HashMap hmResult1 = new HashMap<String, String>();
+//                hmResult1.put("result", key);
+//                hmResult1.put("score", urllist.get(key));
+//                System.out.println("Data: " + hmResult1);
+//                results.add(hmResult1);
+//                rank += 1;
         }
         // Just to generate a response
 /*

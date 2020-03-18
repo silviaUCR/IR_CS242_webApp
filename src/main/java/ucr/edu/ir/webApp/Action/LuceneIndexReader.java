@@ -1,7 +1,8 @@
 package ucr.edu.ir.webApp.Action;
 
-import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -17,55 +18,47 @@ import org.apache.lucene.store.FSDirectory;
 
 /** Simple command-line based search demo. */
 public class LuceneIndexReader {
+    public static Map<Double, String> doSearch(String searchTerm) throws Exception {
+        HashMap<Double, String> lucenehash = new HashMap<Double, String>();
+        HashMap<String, Double> luceneduperemove = new HashMap<String, Double>();
 
-    static IndexSearcher searcher = null;
+        System.out.println("Starting Lucene Index Search....");
+        String indexPath = "luceneindex";
+        IndexSearcher searcher = null;
+        ScoreDoc[] hits = null;
 
-    public static void doSearch(String indexPath, String searchTerm) throws Exception {
-        if (!openSearcher(indexPath)) {
-            System.out.println("Could not open the index for searching.");
-            return;
-        }
-
-        // Put call to search logic here
-        searchIndex(searchTerm);
-    }
-
-    static boolean openSearcher(String indexPath) throws IOException {
         Directory dir = FSDirectory.open(Paths.get(indexPath));
         IndexReader reader = DirectoryReader.open(dir);
+
         searcher = new IndexSearcher(reader);
-        return true;
-    }
-
-    static void searchIndex(String searchTerm) throws Exception {
-
         QueryParser qp = new QueryParser("body", new StandardAnalyzer());
         Query idQuery = qp.parse(searchTerm);
-        TopDocs topDocs = searcher.search(idQuery, 100);
-
-
-        System.out.println("Searching for Term: " + searchTerm);
-        System.out.println(topDocs.scoreDocs[0]);
-        System.out.println(topDocs.scoreDocs[1]);
-        System.out.println(topDocs.scoreDocs[2]);
-        System.out.println(topDocs.scoreDocs[3]);
-        System.out.println("Total hits " + topDocs.totalHits);
-
-
+        TopDocs topDocs = searcher.search(idQuery, 1000);
 
         // obtain the ScoreDoc (= documentID, relevanceScore) array from topDocs
-        ScoreDoc[] hits = topDocs.scoreDocs;
+        hits = topDocs.scoreDocs;
 
-        // retrieve each matching document from the ScoreDoc array
         for (int i = 0; i < hits.length; i++) {
-            Document doc = searcher.doc(hits[i].doc);
-            String urlName = doc.get("url");
-            String bodyText = doc.get("body");
-            System.out.print(i+" ");
-            System.out.print(urlName);
-            System.out.print(bodyText);
-            System.out.println("");
+            Document doc = searcher.doc(topDocs.scoreDocs[i].doc); //Create doc object
+            double docid = topDocs.scoreDocs[i].doc; //Store Document ID
+            double docScore = topDocs.scoreDocs[i].score; //Store Score
+            String bodyText = doc.get("body"); //Store body to use as Key to remove duplicates
+            String urlName = doc.get("url"); //Store url
 
+//            Prints Score, Url and Body for debug
+//            System.out.print(docScore);
+//            System.out.print(urlName); //Prints url of document
+//            System.out.print(bodyText); //Prints bodyText of document
+//            System.out.println("");
+            lucenehash.put(docScore, urlName);
         }
+
+        //Flip Hashmap for convenience
+//        Map<String, Double> myNewHashMap = new HashMap<String, Double>();
+//        for(Map.Entry<Character, String> entry : myHashMap.entrySet()){
+//            myNewHashMap.put(entry.getValue(), entry.getKey());
+//        }
+//        System.out.print(lucenehash);
+        return lucenehash;
     }
 }
