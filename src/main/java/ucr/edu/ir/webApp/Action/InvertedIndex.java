@@ -7,9 +7,9 @@ import java.io.File;
 
 
 public class InvertedIndex  {
-    public static List<String> Search(String query) throws IOException {
+    public static Map<String, Double> Search(String query) throws IOException {
         System.out.println("Starting Hadoop Inverted Index Search....");
-        String filePath = "part-r-00000.txt";
+        String filePath = "C:\\Crawler Extract\\part-r-00000.txt";
         HashMap<String, String> dictionary = new HashMap<String, String>();
 
         String line;
@@ -28,10 +28,14 @@ public class InvertedIndex  {
         }
 
         Map<String, Integer> dfreq = new HashMap<String, Integer>();
-        Map<String, Double> langmodel = new HashMap<String, Double>();
+        Map<String, Integer> tfreq = new HashMap<String, Integer>();
+
 
         for (String key : dictionary.keySet())
         {
+
+
+
 
             String HashOut[] = dictionary.get(key).replace("{","").replace("}","").replace("\"","").split(",");
             for (String hashout : HashOut) {
@@ -39,6 +43,15 @@ public class InvertedIndex  {
                 if (hashvalue.length >= 2) {
                     String url = hashvalue[0];
                     String tf = hashvalue[1].replace("\"","");
+
+                    Integer tcount = tfreq.get(key);
+                    if (tcount == null) {
+                        tfreq.put(key, Integer.parseInt(tf));
+                    }
+                    else {
+                        tfreq.put(key, tcount +  Integer.parseInt(tf));
+                    }
+
 
                     Integer dcount = dfreq.get(url);
 
@@ -57,13 +70,17 @@ public class InvertedIndex  {
         }
 
         int cvol = 0;
+        int dct = 0;
         for (int f : dfreq.values()) {
             cvol += f;
+            dct += 1;
         }
-        System.out.println(cvol);
+
 
         //String query = "Kobe is dead";
         String Term[] = query.toLowerCase().split(" ");
+
+        Map<String, Double> langmodel = new HashMap<String, Double>();
 
         //double lang_model_rank = 1; //INITIALIZE... CANNOT BE ZERO
         for (String term : Term) {
@@ -76,8 +93,10 @@ public class InvertedIndex  {
                     String url = postingvalue[0];
                     int tf = Integer.parseInt(postingvalue[1].replace("\"", ""));
                     int dvol = dfreq.get(url);
+                    double cqi = tfreq.get(term);
                     double lambda = 0.5; //MAYBE IMPLEMENT SOMETHING TO CHANGE THE LAMBDA GIVEN A MORE COMPLEX QUERY. LOWER LAMBDA FOR SIMPLE.
-                    double lang_model_alg = (lambda * tf/dvol) + (lambda * tf/cvol);
+                    double lang_model_alg = ((1-lambda) * tf/dvol) + (lambda * tf/cvol); //Jelinek Mercer Smoothing
+                    //double lang_model_alg = Math.log((tf + ((cvol/dct)*cqi/cvol))/(dvol+(cvol/dct))); //Dirichlet Smoothing
 
                     double lm = dfreq.get(url);
 
@@ -85,7 +104,8 @@ public class InvertedIndex  {
                         langmodel.put(url, lang_model_alg);
                     }
                     else {
-                        langmodel.put(url, lm * lang_model_alg);
+                        langmodel.put(url, lm * lang_model_alg); //Jelinek Mercer Smoothing
+                        //langmodel.put(url, lm + lang_model_alg); //Dirichlet Smoothing
                     }
 
 
@@ -97,17 +117,10 @@ public class InvertedIndex  {
         }
 
 
-        List<String> urllist = new ArrayList<String>();
-
-        for (String key : langmodel.keySet()) {
-            urllist.add(key);
-        }
-
-
         //System.out.println(list.toString());
         reader.close();
 
-        return urllist;
+        return langmodel;
     }
 
 

@@ -12,10 +12,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 @RequestMapping("api/query")
 @RestController
@@ -28,7 +25,9 @@ public class QueryController {
     ) throws IOException {
         System.out.println("Received input. Type: '" + indexType + "' Query: '" + query + "'");
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
-        List<String> urllist = new ArrayList<String>();;
+        Map<String, Double> urllist = new HashMap<String, Double>();;
+        List<HashMap> results=new ArrayList<HashMap>();
+
 
         if (indexType.equals("m"))
         {
@@ -36,6 +35,17 @@ public class QueryController {
             System.out.println("Inverted Result: " + urllist);
             // Call MapReduce index search
             // return SearchMapReduce(queryTerm);
+
+            int rank = 1;
+            for (String key : urllist.keySet()) {
+                HashMap hmResult1 = new HashMap<String, String>();
+                hmResult1.put("result", key);
+                hmResult1.put("score", urllist.get(key));
+                System.out.println("Data: " + hmResult1);
+                results.add(hmResult1);
+                rank += 1;
+            }
+
         }
         else {
             // Call Lucene index reader
@@ -48,15 +58,14 @@ public class QueryController {
             // return SearchLucene(queryTerm);
         }
         // Just to generate a response
-        List<HashMap> results=new ArrayList<HashMap>();
-        HashMap hmResult1 = new HashMap<String, String>();
+/*
         hmResult1.put("result","acme");
         hmResult1.put("score",85);
         results.add(hmResult1);
         HashMap hmResult2 = new HashMap<String, String>();
-        hmResult2.put("result","blah");
+        hmResult2.put("result","test");
         hmResult2.put("score",89);
-        results.add(hmResult2);
+        results.add(hmResult2);*/
         System.out.println("Data: " + results);
         return results;
     }
