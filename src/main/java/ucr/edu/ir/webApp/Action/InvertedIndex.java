@@ -34,9 +34,6 @@ public class InvertedIndex  {
         for (String key : dictionary.keySet())
         {
 
-
-
-
             String HashOut[] = dictionary.get(key).replace("{","").replace("}","").replace("\"","").split(",");
             for (String hashout : HashOut) {
                 String hashvalue[] = hashout.trim().split(" =");

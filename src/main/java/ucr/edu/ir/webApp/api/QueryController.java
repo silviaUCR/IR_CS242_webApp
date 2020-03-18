@@ -1,5 +1,6 @@
 package ucr.edu.ir.webApp.api;
 
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ucr.edu.ir.webApp.Action.InvertedIndex;
@@ -22,7 +23,7 @@ public class QueryController {
     @GetMapping
     public List<HashMap> getQueryResults(@RequestParam(value = "index", defaultValue = "m") String indexType,
                                 @RequestParam(value = "query", defaultValue = "") String query
-    ) throws IOException {
+    ) throws IOException, ParseException {
         System.out.println("Received input. Type: '" + indexType + "' Query: '" + query + "'");
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
         Map<String, Double> urllist = new HashMap<String, Double>();;
@@ -51,7 +52,7 @@ public class QueryController {
             // Call Lucene index reader
 
             //Location of Lucene Index
-            String indexPath = "/home/js010582/IdeaProjects/IR_CS242_webApp/luceneindex";
+            String indexPath = "C:\\Documents and Settings\\i754075\\IR_CS242\\src\\edu\\ucr\\ir\\IR_CS242_webApp\\luceneindex";
             System.out.println("Lucene Search");
 
             LuceneIndexReader.doSearch(indexPath, query);
