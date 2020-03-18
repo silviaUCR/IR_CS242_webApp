@@ -77,6 +77,12 @@ public class InvertedIndex  {
         //String query = "Kobe is dead";
         String Term[] = query.toLowerCase().split(" ");
 
+        double lambda = Term.length*0.1;
+        if (lambda > 1.0){
+            lambda = 1.0;
+        }
+
+
         Map<String, Double> langmodel = new HashMap<String, Double>();
 
         //double lang_model_rank = 1; //INITIALIZE... CANNOT BE ZERO
@@ -91,7 +97,6 @@ public class InvertedIndex  {
                     int tf = Integer.parseInt(postingvalue[1].replace("\"", ""));
                     int dvol = dfreq.get(url);
                     double cqi = tfreq.get(term);
-                    double lambda = 0.5; //MAYBE IMPLEMENT SOMETHING TO CHANGE THE LAMBDA GIVEN A MORE COMPLEX QUERY. LOWER LAMBDA FOR SIMPLE.
                     double lang_model_alg = ((1-lambda) * tf/dvol) + (lambda * tf/cvol); //Jelinek Mercer Smoothing
                     //double lang_model_alg = Math.log((tf + ((cvol/dct)*cqi/cvol))/(dvol+(cvol/dct))); //Dirichlet Smoothing
 
