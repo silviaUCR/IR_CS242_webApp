@@ -33,7 +33,7 @@ import org.apache.lucene.store.FSDirectory;
                   System.exit(0);
                }
 
-            String index = "C:\\Crawler Extract\\DaVinci_Index\\";
+            String index = "/home/js010582/IdeaProjects/IR_CS242_webApp/luceneindex";
             String field = "C:\\Crawler Extract\\DaVinci Code Wiki Page\\";
             String queries = null;
             int repeat = 0;

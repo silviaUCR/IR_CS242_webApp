@@ -9,7 +9,7 @@ import java.io.File;
 public class InvertedIndex  {
     public static Map<String, Double> Search(String query) throws IOException {
         System.out.println("Starting Hadoop Inverted Index Search....");
-        String filePath = "C:\\Crawler Extract\\part-r-00000.txt";
+        String filePath = "hadoopindex/part-r-00000";
         HashMap<String, String> dictionary = new HashMap<String, String>();
 
         String line;
@@ -107,23 +107,15 @@ public class InvertedIndex  {
                         langmodel.put(url, lm * lang_model_alg); //Jelinek Mercer Smoothing
                         //langmodel.put(url, lm + lang_model_alg); //Dirichlet Smoothing
                     }
-
-
                 } else {
                     System.out.println("ignoring line: " + postingvalue);
                 }
             }
-
         }
-
 
         //System.out.println(list.toString());
         reader.close();
 
         return langmodel;
     }
-
-
-
-
 }
