@@ -16,8 +16,8 @@ public class InvertedIndex  {
     public static List<String> InvertedIndex(String query) throws IOException {
 
     //public static void InvertedIndex (String query) throws IOException {
-        //String filePath = "C:\\Crawler Extract\\part-r-00000.txt"; //FOR WINDOWS
-        String filePath = "/home/ucruser/inverted_index/output/out1/part-r-00000";
+        String filePath = "C:\\Crawler Extract\\part-r-00000.txt"; //FOR WINDOWS
+        //String filePath = "/home/ucruser/inverted_index/output/out1/part-r-00000";
         HashMap<String, String> dictionary = new HashMap<String, String>();
 
         String line;
@@ -84,7 +84,7 @@ public class InvertedIndex  {
                     String url = postingvalue[0];
                     int tf = Integer.parseInt(postingvalue[1].replace("\"", ""));
                     int dvol = dfreq.get(url);
-                    double lambda = 0.5;
+                    double lambda = 0.5; //MAYBE IMPLEMENT SOMETHING TO CHANGE THE LAMBDA GIVEN A MORE COMPLEX QUERY. LOWER LAMBDA FOR SIMPLE.
                     double lang_model_alg = (lambda * tf/dvol) + (lambda * tf/cvol);
 
                     double lm = dfreq.get(url);
