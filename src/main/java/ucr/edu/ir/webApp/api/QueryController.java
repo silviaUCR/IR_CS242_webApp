@@ -22,10 +22,12 @@ public class QueryController {
     @GetMapping
     public List<HashMap> getQueryResults(@RequestParam(value = "index", defaultValue = "m") String indexType,
                                 @RequestParam(value = "query", defaultValue = "") String query
-    ) throws IOException {
+    ) throws Exception {
         System.out.println("Received input. Type: '" + indexType + "' Query: '" + query + "'");
         // Use indexType to determine whether to search Lucene or MapReduce index and call that function
-        Map<String, Double> urllist = new HashMap<String, Double>();;
+        Map<String, Double> urllist = new HashMap<String, Double>();
+        Map<Double, String> lucenelist = new HashMap<Double, String>();
+
         List<HashMap> results=new ArrayList<HashMap>();
 
 
@@ -51,11 +53,17 @@ public class QueryController {
             // Call Lucene index reader
 
             //Location of Lucene Index
-            String indexPath = "/home/js010582/IdeaProjects/IR_CS242_webApp/luceneindex";
             System.out.println("Lucene Search");
 
-            LuceneIndexReader.doSearch(indexPath, query);
+            lucenelist = LuceneIndexReader.doSearch(query);
             // return SearchLucene(queryTerm);
+            for (Double key : lucenelist.keySet()) {
+                HashMap hmResult1 = new HashMap<String, String>();
+                hmResult1.put("result", lucenelist.get(key));
+                hmResult1.put("score", key);
+                System.out.println("Data: " + hmResult1);
+                results.add(hmResult1);
+            }
         }
         // Just to generate a response
 /*

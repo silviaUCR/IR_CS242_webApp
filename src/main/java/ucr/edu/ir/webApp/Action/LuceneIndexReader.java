@@ -52,12 +52,6 @@ public class LuceneIndexReader {
 //            System.out.println("");
             lucenehash.put(docScore, urlName);
         }
-
-        //Flip Hashmap for convenience
-//        Map<String, Double> myNewHashMap = new HashMap<String, Double>();
-//        for(Map.Entry<Character, String> entry : myHashMap.entrySet()){
-//            myNewHashMap.put(entry.getValue(), entry.getKey());
-//        }
 //        System.out.print(lucenehash);
         return lucenehash;
     }
