@@ -7,9 +7,9 @@ import java.io.File;
 
 
 public class InvertedIndex  {
-    public static List<String> Search(String query) throws IOException {
+    public static Map<String, Double> Search(String query) throws IOException {
         System.out.println("Starting Hadoop Inverted Index Search....");
-        String filePath = "part-r-00000.txt";
+        String filePath = "C:\\Crawler Extract\\part-r-00000.txt";
         HashMap<String, String> dictionary = new HashMap<String, String>();
 
         String line;
@@ -29,7 +29,7 @@ public class InvertedIndex  {
 
         Map<String, Integer> dfreq = new HashMap<String, Integer>();
         Map<String, Integer> tfreq = new HashMap<String, Integer>();
-        Map<String, Double> langmodel = new HashMap<String, Double>();
+
 
         for (String key : dictionary.keySet())
         {
@@ -80,6 +80,8 @@ public class InvertedIndex  {
         //String query = "Kobe is dead";
         String Term[] = query.toLowerCase().split(" ");
 
+        Map<String, Double> langmodel = new HashMap<String, Double>();
+
         //double lang_model_rank = 1; //INITIALIZE... CANNOT BE ZERO
         for (String term : Term) {
             //System.out.println(st.nextToken());
@@ -115,17 +117,10 @@ public class InvertedIndex  {
         }
 
 
-        List<String> urllist = new ArrayList<String>();
-
-        for (String key : langmodel.keySet()) {
-            urllist.add(key);
-        }
-
-
         //System.out.println(list.toString());
         reader.close();
 
-        return urllist;
+        return langmodel;
     }
 
 
