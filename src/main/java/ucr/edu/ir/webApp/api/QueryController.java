@@ -1,17 +1,9 @@
 package ucr.edu.ir.webApp.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ucr.edu.ir.webApp.Action.InvertedIndex;
 import ucr.edu.ir.webApp.Action.*;
-import ucr.edu.ir.webApp.Action.LuceneSearcher;
-import ucr.edu.ir.webApp.model.Person;
-import ucr.edu.ir.webApp.service.PersonService;
-import ucr.edu.ir.webApp.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.*;
 
 @RequestMapping("api/query")
