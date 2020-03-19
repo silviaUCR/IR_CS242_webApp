@@ -4,24 +4,36 @@ import java.io.*;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.util.zip.GZIPInputStream;
 
 
 public class InvertedIndex  {
     public static Map<String, Double> Search(String query) throws IOException {
         System.out.println("Starting Hadoop Inverted Index Search....");
+        //String filePath = "C:\\Crawler Extract\\part-r-00000.txt";
         String filePath = "hadoopindex/part-r-00000";
         HashMap<String, String> dictionary = new HashMap<String, String>();
 
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
+
+        //String query = "Kobe is dead";
+        String Term[] = query.toLowerCase().split(" ");
+
         while ((line = reader.readLine()) != null)
         {
             String[] parts = line.split("\t", 2);
             if (parts.length >= 2)
             {
+
                 String key = parts[0];
                 String value = parts[1];
-                dictionary.put(key, value);
+                for (String element : Term) {
+                    if (key.contains(element)) {
+                        dictionary.put(key, value);
+                    }
+                }
+
             } else {
                 System.out.println("ignoring line: " + line);
             }
@@ -74,8 +86,7 @@ public class InvertedIndex  {
         }
 
 
-        //String query = "Kobe is dead";
-        String Term[] = query.toLowerCase().split(" ");
+
 
         double lambda = Term.length*0.1;
         if (lambda > 1.0){
