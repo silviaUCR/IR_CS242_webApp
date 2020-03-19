@@ -47,7 +47,7 @@
                                 </tr>
                                 <tr  style="text-align: left;" ng-repeat="i in data | orderBy:'-score'">
 
-                                    <td>{{i.result}}</td>
+                                    <td><a style="color:#00008B;" href={{i.result}}>{{i.result}}</a></td>
                                     <td >{{i.score}}</td>
                                 </tr>
                             </table>
